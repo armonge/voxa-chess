@@ -1,0 +1,9 @@
+MoveIntent move {piece} to {position}
+MoveIntent move to {position}
+MoveIntent {piece} to {position}
+MoveIntent {position}
+MoveIntent {position} to {position}
+
+ShowBoardIntent show me the board
+ShowBoardIntent how does the game look like
+ShowBoardIntent board status
