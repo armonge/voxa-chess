@@ -49,13 +49,33 @@ function getMovement(chess, params) {
   const position = params.position.split(' ').join('').toLowerCase();
   const possibleMoves = chess.moves({ verbose: true });
   let move;
+  if (position.length > 2) {
+    const from = position.slice(0, 2);
+    const to = position.slice(2, 4);
 
-  let posibilities = _.filter(possibleMoves, { to: position });
-  if (posibilities.length === 1) {
-    return chess.move(posibilities[0].san);
+    move = _.find(possibleMoves, { from, to });
+    if (!move) {
+      return null;
+    }
+    return chess.move(move.san);
   }
 
-  posibilities = _.filter(possibleMoves, { piece });
+
+  let posibilities = _.filter(possibleMoves, { to: position });
+
+  if (posibilities.length === 0) {
+    return null;
+  }
+
+  if (!piece) {
+    if (posibilities.length === 1) {
+      return chess.move(posibilities[0].san);
+    }
+
+    return null;
+  }
+
+  posibilities = _.filter(posibilities, { piece });
   if (posibilities.length === 1) {
     return chess.move(posibilities[0].san);
   }
